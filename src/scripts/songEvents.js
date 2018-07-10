@@ -6,14 +6,15 @@ $("#Form-container").on("click", "#save-btn", () => {
     const albumInput = $("#album-input").val();
     const artistInput = $("#artist-input").val();
     const newSong = {
-        name: name,
+        name: songNameInput,
         album: albumInput,
         artist: artistInput,
+        watchted: "test"
     }
 
     songDatabaseHandler.postSong(newSong)
-        .then((SongInfo) => {
-            console.log("taskInfo", taskInfo)
+        .then(() => {
+            // console.log("songInfo", songInfo)
             $("#name-input").val("").attr("placeholder", "Song Name")
             $("#album-input").val("").attr("placeholder", "Album")
             $("#artist-input").val("").attr("placeholder", "Artist")
@@ -27,20 +28,21 @@ $("#Form-container").on("click", "#save-btn", () => {
 
 let updateSongID;
 
-$("#Container").on("click", ".update-btn", () => {
+$("#Container").on("click", ".edit-btn", () => {
 
     updateSongID = $(event.target).parent().attr("id")
-    songDatabaseHandler.getSong(updateSongID)
+    songDatabaseHandler.getSongs(updateSongID)
         .then((response) => {
             console.log("response", response)
             $("#name-input").val(response.name)
-            $("#album-input").val(response.details)
-            $("#artist-input").val(response.date)
+            $("#album-input").val(response.album)
+            $("#artist-input").val(response.artist)
         })
 })
 
 $("#Form-container").on("click", "#update-btn", () => {
-    const nameameInput = $("#name-input").val();
+    const nameInput = $("#name-input").val();
+    console.log($("#name-input").val())
     const albumInput = $("#album-input").val();
     const artistInput = $("#artist-input").val();
     const updateSong = {
@@ -48,6 +50,7 @@ $("#Form-container").on("click", "#update-btn", () => {
         name: nameInput,
         album: albumInput,
         artist: artistInput,
+        watchted: "test"
     }
     songDatabaseHandler.putSong(updateSong)
         .then(() => {
@@ -59,7 +62,7 @@ $("#Form-container").on("click", "#update-btn", () => {
 })
 
 
-$("#Container").on("click", ".save-btn", () => {
+$("#Container").on("click", ".Delete-btn", () => {
     const songID = $(event.target).parent().attr("id")
     songDatabaseHandler.deleteSong(songID)
         .then(() => {
@@ -68,4 +71,5 @@ $("#Container").on("click", ".save-btn", () => {
         .then((songsArray) => {
             songPrinter.printSongs(SongsArray)
         })
+        location.reload()
 })

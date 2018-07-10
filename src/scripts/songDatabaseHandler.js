@@ -26,12 +26,13 @@ const songDatabaseHandler = Object.create({}, {
                 value: (updateSong) => {
                     console.log("database", updateSong)
                     return $.ajax({
-                        url:`http://localhost:3000/tasks/${updateSong.id}`,
+                        url:`http://localhost:3000/songs/${updateSong.id}`,
                         method: "PUT",
                         data: {
                             name: updateSong.name,
                             album: updateSong.album,
-                            artist: updateSong.artist
+                            artist: updateSong.artist,
+                            watched: "false"
                         }
                     })
                 }
@@ -45,5 +46,4 @@ const songDatabaseHandler = Object.create({}, {
                     }
                 }
             })
-
             module.exports = songDatabaseHandler

@@ -1,4 +1,4 @@
-//Build the task form
+
 const songForm = Object.create({}, {
     buildSongForm: {
         value: () => {
